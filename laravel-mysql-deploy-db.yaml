@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: dbc
+  name: dbc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: dbc
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: dbc
+    spec:
+      containers:
+      - image: mysql:5.7.28
+        name: dbc
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: docker
+        - name: MYSQL_DATABASE
+          value: database
+        - name: MYSQL_USER
+          value: docker
+        - name: MYSQL_PASSWORD
+          value: docker
+        volumeMounts:
+        - name: laravel-mysql-storage
+          mountPath: /var/lib/mysql
+        ports:
+        - containerPort: 3306
+        resources: {}
+      volumes:
+      - name: laravel-mysql-storage
+        persistentVolumeClaim:
+          claimName: laravel-mysql-pvc
+status: {}

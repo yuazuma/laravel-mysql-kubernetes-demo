@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+  appservice:
+    container_name: appc
+    build:
+      context: .
+      dockerfile: docker/app/Dockerfile
+    image: azum/laravel-mysql-app
+    networks:
+    - laravel-mysql-network
+
+  webservice:
+    container_name: webc
+    build:
+      context: .
+      dockerfile: docker/web/Dockerfile
+    image: azum/laravel-mysql-web
+    ports:
+    - 8080:80
+    networks:
+    - laravel-mysql-network
+    depends_on:
+    - appservice
+
+networks:
+  laravel-mysql-network:
+    driver: bridge

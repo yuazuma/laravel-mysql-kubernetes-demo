@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    run: appc
+  name: appc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: appc
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: appc
+    spec:
+      containers:
+      - image: azum/laravel-mysql-app
+        name: appc
+        ports:
+        - containerPort: 9000
+        envFrom:
+          - configMapRef:
+              name: laravel-mysql-config
+        resources:
+          limits:
+            cpu: 100m
+            memory: 100Mi
+          requests:
+            cpu: 30m
+            memory: 30Mi
+
+      - image: azum/laravel-mysql-web
+        name: webc
+        ports:
+        - containerPort: 80
+        envFrom:
+          - configMapRef:
+              name: laravel-mysql-config
+        resources:
+          limits:
+            cpu: 100m
+            memory: 100Mi
+          requests:
+            cpu: 30m
+            memory: 30Mi
+      volumes:
+        - name: laravel-mysql-config
+          configMap:
+            name: laravel-mysql-config
+status: {}
