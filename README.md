@@ -62,9 +62,37 @@ kubectl apply -f laravel-mysql-pv.yaml && \
 # 起動確認
 kubectl get pods
 kubectl get service # docker-desktop を使っている場合は `minikube ip` で得られる IP アドレスと、この結果の「 PORT(S) 」の : の右側のポート番号
+```
 
+```
+ctl get podsNAME         TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+appc         NodePort    10.103.74.169    <none>        8080:30529/TCP   17s
+dbc          ClusterIP   10.103.143.244   <none>        3306/TCP         18s
+kubernetes   ClusterIP   10.96.0.1        <none>        443/TCP          3d1h
+```
+
+```sh
 minikube service appc # Minikube を使っている場合はこの結果のホスト名＋ポート
+```
 
+```
+|-----------|------|-------------|---------------------------|
+| NAMESPACE | NAME | TARGET PORT |            URL            |
+|-----------|------|-------------|---------------------------|
+| default   | appc |        8080 | http://192.168.49.2:31793 |
+|-----------|------|-------------|---------------------------|
+🏃  Starting tunnel for service appc.
+|-----------|------|-------------|------------------------|
+| NAMESPACE | NAME | TARGET PORT |          URL           |
+|-----------|------|-------------|------------------------|
+| default   | appc |             | http://127.0.0.1:46597 |
+|-----------|------|-------------|------------------------|
+🎉  Opening service default/appc in default browser...
+👉  http://127.0.0.1:46597
+❗  Because you are using a Docker driver on linux, the terminal needs to be open to run it.
+```
+
+```sh
 # ログ確認
 kubectl describe pods appc-*********-*****
 kubectl describe pods dbc-*********-*****
@@ -83,7 +111,25 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/cont
 
 # Ingress リソースを作成
 kubectl apply -f laravel-mysql-ingress.yaml
+```
+
+### ADDRESS がセットされたことを確認
+
+```sh
 kubectl get ingress
+```
+
+```
+Warning: extensions/v1beta1 Ingress is deprecated in v1.14+, unavailable in v1.22+; use networking.k8s.io/v1 Ingress
+NAME                    CLASS    HOSTS       ADDRESS     PORTS   AGE
+laravel-mysql-ingress   <none>   localhost   localhost   80      75s
+```
+
+### ログの確認方法
+
+```sh
+kubectl get pods -n kube-system
+kubectl logs -n kube-system ingress-nginx-controller-**********-*****
 ```
 
 ---
