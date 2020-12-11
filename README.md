@@ -9,13 +9,23 @@
 ├── README.md
 ├── docker
 │   ├── app
-│   │   └── Dockerfile
+│   │   ├── Dockerfile
+│   │   └── php.ini
 │   └── web
 │       ├── Dockerfile
 │       └── nginx.conf
-└── docker-compose.yaml
+├── docker-compose.yaml
+├── laravel
+├── laravel-mysql-configmap.yaml
+├── laravel-mysql-deploy-app-web.yaml
+├── laravel-mysql-deploy-db.yaml
+├── laravel-mysql-ingress.yaml
+├── laravel-mysql-pv.yaml
+├── laravel-mysql-pvc.yaml
+├── laravel-mysql-service-app.yaml
+└── laravel-mysql-service-db.yaml
 
-3 directories, 5 files
+4 directories, 14 files
 ```
 
 ```sh
