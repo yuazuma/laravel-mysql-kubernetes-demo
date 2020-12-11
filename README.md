@@ -149,6 +149,27 @@ kubectl get pods -n kube-system
 kubectl logs -n kube-system ingress-nginx-controller-**********-*****
 ```
 
+## Laravel のマイグレーション
+
+```sh
+kubectl get pod
+kubectl exec -it appc-cbf76f875-rptjb --container=appc bash
+```
+
+```sh
+php artisan migrate
+```
+
+```
+Migration table created successfully.
+Migrating: 2014_10_12_000000_create_users_table
+Migrated:  2014_10_12_000000_create_users_table (4.39ms)
+Migrating: 2014_10_12_100000_create_password_resets_table
+Migrated:  2014_10_12_100000_create_password_resets_table (3.38ms)
+Migrating: 2019_08_19_000000_create_failed_jobs_table
+Migrated:  2019_08_19_000000_create_failed_jobs_table (2.68ms)
+```
+
 ---
 
 ## おかたづけ
