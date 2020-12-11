@@ -36,7 +36,7 @@ docker push azum/laravel-mysql-app
 docker push azum/laravel-mysql-web
 ```
 
-## Minikube を開始
+## （ Minikube を使用する場合）クラスターを作成
 
 ```sh
 minikube start
