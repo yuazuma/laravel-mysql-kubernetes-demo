@@ -26,19 +26,26 @@ docker push azum/laravel-mysql-app
 docker push azum/laravel-mysql-web
 ```
 
-## Minikube を用意
+## Minikube を開始
 
 ```sh
 minikube start
+```
 
-# kubectl config get-contexts
-# # kubectl config use-context docker-desktop
-# # kubectl config use-context minikube
+## context を確認・設定
 
-minikube ssh
+```sh
+kubectl config get-contexts
+# kubectl config use-context docker-desktop
+# kubectl config use-context minikube
+# kubectl config set-context $(kubectl config current-context) --namespace=laravel-mysql-namespace
 ```
 
 ## persistentVolume 用のディレクトリを切る
+
+```sh
+minikube ssh
+```
 
 ```sh
 cd /mnt
