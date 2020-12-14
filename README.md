@@ -36,7 +36,7 @@ docker push azum/laravel-mysql-app
 docker push azum/laravel-mysql-web
 ```
 
-## Minikube を開始
+## （ Minikube を使用する場合）クラスターを作成
 
 ```sh
 minikube start
@@ -147,6 +147,80 @@ laravel-mysql-ingress   <none>   localhost   localhost   80      75s
 ```sh
 kubectl get pods -n kube-system
 kubectl logs -n kube-system ingress-nginx-controller-**********-*****
+```
+
+## Laravel のマイグレーション
+
+```sh
+kubectl get pod
+kubectl exec -it appc-cbf76f875-rptjb --container=appc bash
+```
+
+```sh
+php artisan migrate
+```
+
+```
+Migration table created successfully.
+Migrating: 2014_10_12_000000_create_users_table
+Migrated:  2014_10_12_000000_create_users_table (4.39ms)
+Migrating: 2014_10_12_100000_create_password_resets_table
+Migrated:  2014_10_12_100000_create_password_resets_table (3.38ms)
+Migrating: 2019_08_19_000000_create_failed_jobs_table
+Migrated:  2019_08_19_000000_create_failed_jobs_table (2.68ms)
+```
+
+```sh
+composer require laravel/ui
+```
+
+```
+Deprecated: PHP Startup: Use of mbstring.internal_encoding is deprecated in Unknown on line 0
+Using version ^3.1 for laravel/ui
+./composer.json has been updated
+Running composer update laravel/ui
+Loading composer repositories with package information
+Updating dependencies
+Lock file operations: 1 install, 0 updates, 0 removals
+  - Locking laravel/ui (v3.1.0)
+Writing lock file
+Installing dependencies from lock file (including require-dev)
+Package operations: 1 install, 0 updates, 0 removals
+As there is no 'unzip' command installed zip files are being unpacked using the PHP zip extension.
+This may cause invalid reports of corrupted archives. Besides, any UNIX permissions (e.g. executable) defined in the archives will be lost.
+Installing 'unzip' may remediate them.
+  - Downloading laravel/ui (v3.1.0)
+  - Installing laravel/ui (v3.1.0): Extracting archive
+Generating optimized autoload files
+> Illuminate\Foundation\ComposerScripts::postAutoloadDump
+> @php artisan package:discover --ansi
+
+Deprecated: PHP Startup: Use of mbstring.internal_encoding is deprecated in Unknown on line 0
+Discovered Package: facade/ignition
+Discovered Package: fideloper/proxy
+Discovered Package: fruitcake/laravel-cors
+Discovered Package: laravel/sail
+Discovered Package: laravel/tinker
+Discovered Package: laravel/ui
+Discovered Package: nesbot/carbon
+Discovered Package: nunomaduro/collision
+Package manifest generated successfully.
+73 packages you are using are looking for funding.
+Use the `composer fund` command to find out more!
+```
+
+```
+php artisan ui vue --auth
+```
+
+```
+Vue scaffolding installed successfully.
+Please run "npm install && npm run dev" to compile your fresh scaffolding.
+Authentication scaffolding generated successfully.
+```
+
+```sh
+php artisan migrate
 ```
 
 ---
